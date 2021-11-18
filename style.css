@@ -1,0 +1,100 @@
+body {
+  height: 100%;
+}
+
+.content {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding-bottom: 110px;
+}
+
+aside {
+  position: absolute;
+  width: 350px;
+  height: 500px;
+  border-radius: 10px;
+  padding: 5px;
+  border: 1px solid black;
+  left: 70%;
+  top: 10%;
+}
+
+footer {
+  border-top: 1px solid gray;
+  height: 100px;
+  margin-top: 110px;
+  background-color: beige;
+}
+
+.container {
+  display: flex;
+}
+
+.grid {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: yellow;
+}
+
+.grid div {
+  height: 20px;
+  width: 20px;
+}
+
+.tetromino {
+  background-color: blue;
+}
+
+
+.mini-grid {
+  margin-left: 50px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: yellow;
+}
+
+.mini-grid div {
+  height: 20px;
+  width: 20px;
+}
+
+#rules_block {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: darkorange;
+  padding: 3%;
+}
+
+details > summary {
+  list-style: none;
+}
+
+#musicContainer {
+  width: 94%;
+  padding: 3%;
+  background-color: aqua;
+  border-radius: 10px;
+  display: flex;
+  text-align:center;
+  justify-items: center;
+}
+
+#music {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.play {
+  background: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-pause-512.png");
+  background-size: cover;
+}
+.pause {
+  background: url("http://simpleicon.com/wp-content/uploads/play1.png");
+  background-size: cover;
+}
+
