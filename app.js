@@ -1,11 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.querySelector('.grid')
   let squares = Array.from(document.querySelectorAll('.grid div'))
+
   const scoreDisplay = document.querySelector('#score')
+  const finalScore = document.getElementById('finalScore');
+
   const startBtn = document.querySelector('#start-button')
+  const restartBtn = document.getElementById('restart-button');
+
+  const gameOverScreen = document.getElementById('gameOverScreen');
+  const closeGameover = document.getElementById('closeGameover');
 
   const playBtn = document.getElementById('music');
+  const volumeBtn = document.getElementById('audioVolume');
+  const audioVolumeLevel = document.getElementById('audioVolumeLevel');
   const audio = document.getElementById('player');
+
+  const defaultVolumeWidth = audioVolumeLevel.offsetWidth;
+  const volumeStep = defaultVolumeWidth/10;
+  console.log(defaultVolumeWidth, volumeStep)
 
   let tetrominoFallTimeout = 1000;
   const width = 10
@@ -62,7 +75,45 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPosition = 4
   let currentRotation = 0
 
-  console.log(theTetrominoes[0][0])
+  volumeBtn.addEventListener('wheel', (event)=> {
+    event.preventDefault();
+    volumeBtn.className = 'volumeOn'
+    const px = 'px';
+    const volumeWidth = audioVolumeLevel.offsetWidth;
+    console.log(event)
+
+    const tempVolume = audio.volume;
+    if(event.deltaY > 0 ) {
+      if(tempVolume - 0.1 < 0) {
+        audio.volume = 0;
+        audioVolumeLevel.style.width = '0px';
+        volumeBtn.className = 'volumeOff'
+      } else{
+        audio.volume -= 0.1;
+        audioVolumeLevel.style.width = (volumeWidth - volumeStep) + px;
+      }
+    } else if(event.deltaY < 1) {
+      if(tempVolume + 0.1 > 1) {
+        audio.volume = 1;
+        audioVolumeLevel.style.width = `${defaultVolumeWidth}px`;
+      } else{
+        audio.volume += 0.1;
+        audioVolumeLevel.style.width = (volumeWidth + volumeStep) + px;
+      }
+
+
+    }
+    console.log(volumeWidth, volumeStep)
+    // console.log(audioVolumeLevel.style.width)
+  })
+
+  restartBtn.addEventListener('click', ()=> {
+    document.location.reload();
+  })
+
+  closeGameover.addEventListener('click' , ()=> {
+    document.location.reload();
+  });
 
   //randomly select a Tetromino and its first rotation
   let random = Math.floor(Math.random()*theTetrominoes.length)
@@ -111,6 +162,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     playBtn.classList.remove('play');
     playBtn.classList.add('pause');
+  }
+
+  volumeBtn.addEventListener('click', () => {
+    const classArr = volumeBtn.classList.value.split(' ');
+    console.log(classArr.includes('volumeOn'))
+
+    if(classArr.includes('volumeOn')) {
+      volumeOff();
+    } else if(classArr.includes('volumeOff')){
+      volumeOn();
+    }
+  })
+
+  function volumeOn() {
+    volumeBtn.classList.remove('volumeOff');
+    volumeBtn.classList.add('volumeOn');
+
+    audio.volume = 1;
+  }
+
+  function volumeOff() {
+    volumeBtn.classList.remove('volumeOn');
+    volumeBtn.classList.add('volumeOff');
+
+    audio.volume = 0;
   }
 
   //assign functions to keyCodes
@@ -248,20 +324,30 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+
+
   //add functionality to the button
   startBtn.addEventListener('click', () => {
     if (timerId) {
+      startBtn.innerHTML = 'Resume';
+      startBtn.classList.remove('btn-warning');
+      startBtn.classList.add('btn-primary');
+
       pauseMusic();
       clearInterval(timerId)
       timerId = null
     } else {
+      startBtn.innerHTML = 'Pause';
+      startBtn.classList.remove('btn-primary');
+      startBtn.classList.add('btn-warning');
+
       playMusic();
       draw()
       timerId = restart();
       nextRandom = Math.floor(Math.random()*theTetrominoes.length)
       displayShape()
     }
-  })
+  });
 
   function restart() {
     clearInterval(timerId)
@@ -299,7 +385,9 @@ document.addEventListener('DOMContentLoaded', () => {
   //game over
   function gameOver() {
     if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
-      scoreDisplay.innerHTML = 'end'
+      finalScore.innerHTML = score;
+      gameOverScreen.style.display = 'flex'
+
       clearInterval(timerId)
       pauseMusic()
     }

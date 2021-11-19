@@ -7,28 +7,50 @@
     <title>Basic Tetris</title>
   </head>
   <body>
+    <div id="gameOverScreen">
+      <p>GameOver</p>
+      <p>Your final score is: <span id="finalScore"></span></p>
+      <button id="closeGameover"></button>
+    </div>
     <div class="content">
       <aside>
-        <div id="musicContainer">
-          <div id="music" class="pause">
-            <audio id="player" src="audio.mp3" preload="auto"></audio>
-          </div>
+        <input type="checkbox" id="side-checkbox" />
+        <div class="side-panel">
+          <label class="side-button-2" for="side-checkbox">+</label>
+          <div class="side-title">Правила игры «Тетрис»</div>
+          <p>Цель игры:  заполнить как можно больше горизонтальных линий на игровом  поле,
+            размещая опускающиеся фигуры и не оставляя пустых пространств между ними.
+            Один сеанс длится ровно 2 минуты.
+            Заполненные линии автоматически удаляются,
+            предоставляя пространство для продолжения игры.</p>
         </div>
-        <details id="rules_block">
-          <summary><h3>Правила игры «Тетрис»</h3></summary>
-          Цель игры:  заполнить как можно больше горизонтальных линий на игровом  поле,
-          размещая опускающиеся фигуры и не оставляя пустых пространств между ними.
-          Один сеанс длится ровно 2 минуты.
-          Заполненные линии автоматически удаляются,
-          предоставляя пространство для продолжения игры.
-        </details>
-
+        <div class="side-button-1-wr">
+          <label class="side-button-1" for="side-checkbox">
+            <div class="side-b side-open">>></div>
+            <div class="side-b side-close"><<</div>
+          </label>
+        </div>
       </aside>
 
-
+      <div id="musicContainer">
+        <div id="musicControlsContainer">
+          <div id="music" class="pause">
+            <audio id="player" src="audio.mp3" preload="auto" loop="loop"></audio>
+          </div>
+          <div id="audioVolume" class="volumeOn">
+            <span class="hint">Scroll on me</span>
+          </div>
+        </div>
+        <div id="volumeLevelContainer">
+          <div id="audioVolumeLevel"></div>
+        </div>
+      </div>
 
       <h3>Score:<span id="score">0</span></h3>
-      <button id="start-button">Start/Pause</button>
+      <div id="buttonControls">
+        <button id="start-button" class="btn-primary">New game</button>
+        <button type="button" id="restart-button" class="btn-danger">Restart</button>
+      </div>
 
       <div class="container">
         <div class="grid">
@@ -282,12 +304,6 @@
           Copyright © 2016. freeCodeCamp.org
       </p>
       </footer>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-      <!-- Edited by Gorbas Ivan  -->
->>>>>>> 16cfe5b (initial)
->>>>>>> 64a17e5 (center game, music controls, restart)
+
   </body>
 </html>
